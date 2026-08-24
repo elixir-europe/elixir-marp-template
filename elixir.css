@@ -1,0 +1,286 @@
+/*
+ * ELIXIR Marp theme
+ * Derived from: ELIXIR slide template 2025 (.pptx)
+ * Colors, fonts, and logo usage follow the official ELIXIR brand template.
+ *
+ * @theme elixir
+ */
+
+@import 'default';
+
+/* Open Sans, embedded — see assets/fonts/OFL.txt for license */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/fonts/OpenSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/fonts/OpenSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/fonts/OpenSans-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+:root {
+  --elixir-navy: #023452;
+  --elixir-orange: #f47d20;
+  --elixir-bg: #fafafa;
+  --elixir-bg-alt: #e4e9ef;
+  --elixir-gray: #4d4848;
+  --elixir-gray-light: #b2b2b2;
+  --elxir-dark-cyan: #003f41;
+}
+
+/* Align slide content to the top instead of centering vertically*/
+section {
+  font-family: 'Open Sans', Arial, sans-serif;
+  background: var(--elixir-bg);
+  color: var(--elixir-gray);
+  font-size: 22px;
+  padding: 50px 60px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+/* Headings: navy, bold, Open Sans 32pt per brand spec */
+h1, h2, h3 {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: 700;
+}
+
+h1 { font-size: 48px;
+     color: var(--elxir-dark-cyan);
+} /*talk title*/
+h2 { font-size: 32px;
+     color: var(--elixir-navy);
+} /*slide title*/
+h3 { font-size: 24px;
+     color: var(--elixir-navy);
+}
+
+/* Body text sizing per brand spec: 22pt first level, 20pt second level */
+p, li { font-size: 22px; }
+li li { font-size: 20px; }
+
+strong { color: var(--elixir-navy); }
+
+/* Orange highlight - use <mark> or a .highlight span for emphasis in text */
+mark, .highlight {
+  background: none;
+  color: var(--elixir-orange);
+  font-weight: 700;
+}
+
+a { color: var(--elixir-orange); }
+
+/* Footer logo - bottom right on every content slide, per brand rule.
+   Set with the Marp front-matter directive, e.g.:
+   footer: '![w:90px](assets/elixir-logo.png)'
+   Marp then repeats it on every slide automatically. */
+section > footer {
+  position: absolute !important;
+  bottom: 18px !important;
+  right: 30px !important;
+  left: auto !important;
+  top: auto !important;
+  width: 90px;
+  text-align: right;
+}
+section > footer img { width: 90px; }
+
+/*-----no logo slide-----*/
+section.no-logo footer,
+section.no-logo::after {
+  display: none;
+}
+
+/* ---------- Table styling per brand spec ---------- */
+/* Header row: dark navy background, white bold text */
+table { font-size: 20px; border-collapse: collapse; width: 100%; }
+thead th {
+  background: var(--elixir-gray);
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 12px;
+}
+tbody td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--elixir-bg-alt);
+}
+
+/* ================= TITLE SLIDE ================= */
+/* Usage: add the class "title" to the slide's <!-- _class --> directive */
+section.title {
+  background-color: var(--elixir-bg);
+  color: var(--elixir-gray);
+  background-image:
+    url('assets/elixir-logo-white.png'),
+    url('assets/network-circle.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    63px 255px,
+    left center;
+  background-size:
+    auto 206px,
+    auto 100%;
+}
+section.title h1 {
+  position: absolute;
+  right: 60px;
+  top: 42%;
+  text-align: right;
+  width: 60%;
+}
+section.title .speaker {
+  position: absolute;
+  right: 60px;
+  top: 60%;
+  text-align: right;
+  width: 60%;
+}
+section.title .speaker-name {
+  font-size: 24px;
+  color: var(--elixir-navy);
+  margin-bottom: 4px;
+}
+section.title .speaker-affiliation {
+  font-size: 18px;
+  color: var(--elixir-gray);
+}
+
+section.title .url {
+  position: absolute;
+  bottom: 22px;
+  right: 60px;
+  font-size: 24px;
+  color: var(--elixir-navy);
+  text-align: right;
+  font-style: italic;
+}
+section.title footer,
+section.divider footer,
+section.closing footer {
+  filter: none;
+}
+
+section.title footer,
+section.title::after {
+  display: none;
+}
+
+/* ================= SECTION / DIVIDER SLIDE ================= */
+/* Usage: add the class "divider" — for signposting a new topic */
+section.divider {
+  background: var(--elixir-navy);
+  background-image:url('assets/elixir-network-bg.png');
+  background-repeat: no-repeat;
+  background-position:
+    0px -50px;
+  background-size:
+    auto 100%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section.divider h1 {
+  background: var(--elixir-bg);
+  font-size: 32px;
+  font-weight: 400;
+  text-align: left;
+  padding-left: 40px;
+  padding-right: 40px;
+  width: fit-content;
+  max-width: 40%;
+  position: absolute;
+  top: 150px;
+  left: 0px;
+}
+section.divider::after {
+  display: none; /* hide page number, same fix as title slide */
+}
+section.divider footer {
+  display: none; /* no logog */
+}
+
+/* ================= CLOSING / THANK YOU SLIDE ================= */
+/* Usage: add the class "closing" */
+section.closing {
+  background-image:
+    url('assets/network-wave.png'),
+    url('assets/elixir-logo-standard.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    left top,
+    60px 460px;
+  background-size:
+    100% auto,
+    250px auto;
+}
+section.closing h1 {
+  position: absolute;
+  right: 60px;
+  bottom: 300px;
+}
+section.closing .social {
+  position: absolute;
+  bottom: 90px;
+  right: 60px;
+  font-size: 14px;
+  color: var(--elixir-gray);
+  text-align: right;
+  font-style: italic;
+}
+section.closing .url {
+  position: absolute;
+  bottom: 22px;
+  right: 60px;
+  font-size: 24px;
+  color: var(--elixir-navy);
+  text-align: right;
+  font-style: italic;
+}
+section.closing::after {
+  display: none; /* hide page number, same fix as title slide */
+}
+section.closing footer {
+  display: none; /* logo is now baked into the background layer above */
+}
+
+section.closing .social {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
+  text-align: right;
+  color: var(--elixir-gray);
+}
+section.closing .social-header {
+  font-style: italic;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+section.closing .social-row {
+  display: flex;
+  color: var(--elixir-navy);
+  align-items: center;
+  gap: 16px;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+section.closing .social-row img {
+  width: 40px;
+  height: auto;
+}
