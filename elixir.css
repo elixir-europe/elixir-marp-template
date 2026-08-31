@@ -8,26 +8,6 @@
 
 @import 'default';
 
-/* Open Sans, embedded — see assets/fonts/OFL.txt for license */
-@font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-}
-
 :root {
   --elixir-navy: #023452;
   --elixir-orange: #f47d20;
@@ -35,10 +15,40 @@
   --elixir-bg-alt: #e4e9ef;
   --elixir-gray: #4d4848;
   --elixir-gray-light: #b2b2b2;
-  --elxir-dark-cyan: #003f41;
+  --elixir-dark-cyan: #003f41;
+
+  --elixir-logo: url('assets/theme/elixir-logo-standard.png');
+  --elixir-logo-white: url('assets/theme/elixir-logo-white.png');
+  --elixir-title-art: url('assets/theme/network-circle.png');
+  --elixir-divider-art: url('assets/theme/network-bg.png');
+  --elixir-closing-art: url('assets/theme/network-wave.png');
+
+  --linkin-logo: url('assets/theme/linkin-logo.png');
+  --bsky-logo: url('assets/theme/bluesky-logo.png');
 }
 
-/* Align slide content to the top instead of centering vertically*/
+/* ================= FONT ================= */
+
+/* Open Sans, embedded — see assets/fonts/OFL.txt for license */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/theme/fonts/OpenSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/theme/fonts/OpenSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('assets/theme/fonts/OpenSans-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
 section {
   font-family: 'Open Sans', Arial, sans-serif;
   background: var(--elixir-bg);
@@ -47,12 +57,22 @@ section {
   padding: 50px 60px;
 }
 
+/* ================= CONTENT PLACEMENT ================= */
+
+/* Align slide content to the top instead of centering vertically*/
 section {
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
 }
 
+/* logo is bottom right, so put page number top right */
+section::after {
+  font-size: 14px;
+  top: 18px;
+  right: 30px;
+}
+
+/* ================= HEADINGS ================= */
 
 /* Headings: navy, bold, Open Sans 32pt per brand spec */
 h1, h2, h3 {
@@ -60,15 +80,35 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
-h1 { font-size: 48px;
-     color: var(--elxir-dark-cyan);
+h1 {
+  font-size: 48px;
+  color: var(--elixir-dark-cyan);
 } /*talk title*/
-h2 { font-size: 32px;
-     color: var(--elixir-navy);
+h2 {
+  font-size: 32px;
+  color: var(--elixir-navy);
 } /*slide title*/
-h3 { font-size: 24px;
-     color: var(--elixir-navy);
+h3 {
+  font-size: 24px;
+  color: var(--elixir-navy);
 }
+
+p + h3 { /* do not double up on spacing if a paragraph precedes a heading */
+  margin-top: 0px;
+}
+
+/*a subtitle below a slide heading*/
+h2 .subtitle {
+  display: block;
+  color: var(--elixir-navy);
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-top: 0px;
+  margin-bottom: 0px; /* gets from parent h2 */
+}
+
+/* ================= BODY ================= */
 
 /* Body text sizing per brand spec: 22pt first level, 20pt second level */
 p, li { font-size: 22px; }
@@ -85,10 +125,26 @@ mark, .highlight {
 
 a { color: var(--elixir-orange); }
 
+/* center images on the slide/parent div, instead of left-aligning them */
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+/*image in this element have border*/
+img.boxed {
+  border: 2px solid var(--elixir-gray);
+  border-radius: 8px;
+}
+/*usage: <img src="..." class="boxed" /> */
+
+/* ================= FOOTER ================= */
+
 /* Footer logo - bottom right on every content slide, per brand rule.
    Set with the Marp front-matter directive, e.g.:
    footer: '![w:90px](assets/elixir-logo.png)'
    Marp then repeats it on every slide automatically. */
+
 section > footer {
   position: absolute !important;
   bottom: 18px !important;
@@ -100,13 +156,52 @@ section > footer {
 }
 section > footer img { width: 90px; }
 
-/*-----no logo slide-----*/
+
+
+/* ======== Paragraph in a "small" class div ======== */
+
+.small p {
+  font-size: 14px !important;
+}
+
+
+/* ================= NO LOGO SLIDE ================= */
 section.no-logo footer,
 section.no-logo::after {
   display: none;
 }
 
-/* ---------- Table styling per brand spec ---------- */
+/* ================= BOX ================= */
+
+.box {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.box-blue {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--elixir-bg-alt);
+  border-left: 4px solid var(--elixir-navy);
+}
+
+.box-orange {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--elixir-bg-alt);
+  border-left: 4px solid var(--elixir-orange);
+}
+
+/* strong text in a orange box is orange */
+.box-orange strong {
+  color: var(--elixir-orange);
+}
+
+/* ================= TABLE ================= */
+
 /* Header row: dark navy background, white bold text */
 table { font-size: 20px; border-collapse: collapse; width: 100%; }
 thead th {
@@ -120,14 +215,26 @@ tbody td {
   border-bottom: 1px solid var(--elixir-bg-alt);
 }
 
+/* ================= 2 COLUMS ================= */
+/* Usage: <div class="columns"> ... </div> */
+.columns {
+  display: flex;
+  flex-direction: row;
+  /*grid-template-columns: 1fr 1fr;*/
+  gap: 1rem;
+
+  /* Center align content vertically */
+  align-items: top;
+}
+
 /* ================= TITLE SLIDE ================= */
 /* Usage: add the class "title" to the slide's <!-- _class --> directive */
 section.title {
   background-color: var(--elixir-bg);
   color: var(--elixir-gray);
   background-image:
-    url('assets/elixir-logo-white.png'),
-    url('assets/network-circle.png');
+    var(--elixir-logo-white),
+    var(--elixir-title-art);
   background-repeat: no-repeat, no-repeat;
   background-position:
     63px 255px,
@@ -184,7 +291,7 @@ section.title::after {
 /* Usage: add the class "divider" — for signposting a new topic */
 section.divider {
   background: var(--elixir-navy);
-  background-image:url('assets/elixir-network-bg.png');
+  background-image: var(--elixir-divider-art);
   background-repeat: no-repeat;
   background-position:
     0px -50px;
@@ -196,7 +303,7 @@ section.divider {
   justify-content: center;
 }
 
-section.divider h1 {
+section.divider h2 {
   background: var(--elixir-bg);
   font-size: 32px;
   font-weight: 400;
@@ -220,8 +327,8 @@ section.divider footer {
 /* Usage: add the class "closing" */
 section.closing {
   background-image:
-    url('assets/network-wave.png'),
-    url('assets/elixir-logo-standard.png');
+    var(--elixir-closing-art),
+    var(--elixir-logo);
   background-repeat: no-repeat, no-repeat;
   background-position:
     left top,

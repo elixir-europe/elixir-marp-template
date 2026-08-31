@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: elixir
-footer: '![w:90px](assets/elixir-logo-standard.png)'
+footer: '![w:90px](assets/theme/elixir-logo-standard.png)'
 paginate: true
 ---
 
@@ -37,7 +37,7 @@ These slides facilitate a consistent look and feel to how ELIXIR presents intern
 
 <!-- _class: divider -->
 
-# Divider slide – <br>this slide can be used as a signpost to divide topics in a talk
+## Divider slide – <br>this slide can be used as a signpost to divide topics in a talk
 
 ---
 
@@ -70,7 +70,6 @@ Keep photos/images to the inner portion of the slide to ensure the visibility of
 ---
 
 <!-- _class: closing -->
-<!-- _footer: '![w:90px](assets/elixir-logo-standard.png)' -->
 
 # Thank you
 
@@ -79,10 +78,9 @@ Keep photos/images to the inner portion of the slide to ensure the visibility of
 <div class="social">
   <div class="social-header">Follow us on social media</div>
   <div class="social-row">
-    <img src="assets/bluesky-logo.png">
+    <img src="assets/theme/bluesky-logo.png">
     <span>@elixir-europe.org</span>
-    <img src="assets/linkedin-logo.png">
+    <img src="assets/theme/linkedin-logo.png">
     <span>/company/elixir-europe</span>
   </div>
 </div>
-
