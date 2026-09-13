@@ -4,32 +4,58 @@
  * Colors, fonts, and logo usage follow the official ELIXIR brand template.
  *
  * @theme elixir
+ *
+ * Sections in this file, in the order a deck is typically built:
+ *   Theme variables (colors, background images)
+ *   Fonts
+ *   Base slide (background, padding, content alignment, page number)
+ *   Typography (headings, subtitle, body text, emphasis, links)
+ *   Images
+ *   Tables
+ *   Layout utilities (multi-column, small print, callout boxes)
+ *   Footer & page number (incl. the "no-logo" slide variant)
+ *   Title slide
+ *   Divider / section-break slide
+ *   Closing / thank-you slide
+ *
+ * Every class documented below is demonstrated in template.md — when you
+ * add or rename a class here, update that demo slide too.
  */
 
 @import 'default';
 
+/* =====================================================================
+   THEME VARIABLES
+   ===================================================================== */
+
 :root {
+  /* brand colors */
   --elixir-navy: #023452;
   --elixir-orange: #f47d20;
+  --elixir-light-orange: #fdeadb;
   --elixir-bg: #fafafa;
   --elixir-bg-alt: #e4e9ef;
   --elixir-gray: #4d4848;
-  --elixir-gray-light: #b2b2b2;
+  --elixir-gray-light: #b2b2b2; /* muted/secondary tone, available for optional use */
   --elixir-dark-cyan: #003f41;
 
+  /* background art used by the title/divider/closing slide layouts, below */
   --elixir-logo: url('assets/theme/elixir-logo-standard.png');
   --elixir-logo-white: url('assets/theme/elixir-logo-white.png');
   --elixir-title-art: url('assets/theme/network-circle.png');
   --elixir-divider-art: url('assets/theme/network-bg.png');
   --elixir-closing-art: url('assets/theme/network-wave.png');
 
-  --linkin-logo: url('assets/theme/linkin-logo.png');
-  --bsky-logo: url('assets/theme/bluesky-logo.png');
+  /* social icons used by the closing slide's <div class="social"> block */
+  --linkedin-logo: url('assets/theme/linkedin-logo.png');
+  --bluesky-logo: url('assets/theme/bluesky-logo.png');
 }
 
-/* ================= FONT ================= */
+/* =====================================================================
+   FONTS
+   ===================================================================== */
 
-/* Open Sans, embedded — see assets/fonts/OFL.txt for license */
+/* Open Sans, embedded — see assets/theme/fonts/OFL.txt for license */
 @font-face {
   font-family: 'Open Sans';
   src: url('assets/theme/fonts/OpenSans-Regular.woff2') format('woff2');
@@ -49,32 +75,34 @@
   font-style: italic;
 }
 
+/* =====================================================================
+   BASE SLIDE
+   ===================================================================== */
+
 section {
   font-family: 'Open Sans', Arial, sans-serif;
   background: var(--elixir-bg);
   color: var(--elixir-gray);
   font-size: 22px;
   padding: 50px 60px;
-}
 
-/* ================= CONTENT PLACEMENT ================= */
-
-/* Align slide content to the top instead of centering vertically*/
-section {
+  /* align content to the top instead of Marp's default vertical centering */
   display: flex;
   justify-content: flex-start;
 }
 
-/* logo is bottom right, so put page number top right */
+/* logo is bottom right (see FOOTER, below), so put the page number top right */
 section::after {
   font-size: 14px;
   top: 18px;
   right: 30px;
 }
 
-/* ================= HEADINGS ================= */
+/* =====================================================================
+   TYPOGRAPHY
+   ===================================================================== */
 
-/* Headings: navy, bold, Open Sans 32pt per brand spec */
+/* Headings: navy, bold, Open Sans per brand spec */
 h1, h2, h3 {
   font-family: 'Open Sans', Arial, sans-serif;
   font-weight: 700;
@@ -83,21 +111,23 @@ h1, h2, h3 {
 h1 {
   font-size: 48px;
   color: var(--elixir-dark-cyan);
-} /*talk title*/
+} /* talk title, used on the title slide */
 h2 {
   font-size: 32px;
   color: var(--elixir-navy);
-} /*slide title*/
+} /* slide heading */
 h3 {
   font-size: 24px;
   color: var(--elixir-navy);
-}
+} /* secondary heading within a slide */
 
-p + h3 { /* do not double up on spacing if a paragraph precedes a heading */
+/* do not double up on spacing if a paragraph precedes a heading */
+p + h3 {
   margin-top: 0px;
 }
 
-/*a subtitle below a slide heading*/
+/* A subtitle below a slide heading.
+   Usage: ## Heading <span class="subtitle">Subtitle text</span> */
 h2 .subtitle {
   display: block;
   color: var(--elixir-navy);
@@ -105,10 +135,8 @@ h2 .subtitle {
   font-weight: 700;
   font-size: 28px;
   margin-top: 0px;
-  margin-bottom: 0px; /* gets from parent h2 */
+  margin-bottom: 0px; /* gets its bottom margin from the parent h2 */
 }
-
-/* ================= BODY ================= */
 
 /* Body text sizing per brand spec: 22pt first level, 20pt second level */
 p, li { font-size: 22px; }
@@ -116,7 +144,8 @@ li li { font-size: 20px; }
 
 strong { color: var(--elixir-navy); }
 
-/* Orange highlight - use <mark> or a .highlight span for emphasis in text */
+/* Orange highlight for emphasis in text.
+   Usage: <mark>...</mark> or <span class="highlight">...</span> */
 mark, .highlight {
   background: none;
   color: var(--elixir-orange);
@@ -125,84 +154,37 @@ mark, .highlight {
 
 a { color: var(--elixir-orange); }
 
-/* center images on the slide/parent div, instead of left-aligning them */
+/* =====================================================================
+   IMAGES
+   ===================================================================== */
+
+/* Center images as a group on the slide, instead of left-aligning them.
+   Images stay inline so multiple images on one markdown line (e.g.
+   "![w:400](a.png) ![w:400](b.png)") sit side by side; the paragraph
+   wrapping them is what centers the group and spaces them out. */
 img {
-  display: block;
-  margin: 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+p:has(> img) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
-/*image in this element have border*/
+/* Bordered frame for a photo/screenshot.
+   Usage: <img src="..." class="boxed"> */
 img.boxed {
   border: 2px solid var(--elixir-gray);
   border-radius: 8px;
 }
-/*usage: <img src="..." class="boxed" /> */
 
-/* ================= FOOTER ================= */
+/* =====================================================================
+   TABLES
+   ===================================================================== */
 
-/* Footer logo - bottom right on every content slide, per brand rule.
-   Set with the Marp front-matter directive, e.g.:
-   footer: '![w:90px](assets/elixir-logo.png)'
-   Marp then repeats it on every slide automatically. */
-
-section > footer {
-  position: absolute !important;
-  bottom: 18px !important;
-  right: 30px !important;
-  left: auto !important;
-  top: auto !important;
-  width: 90px;
-  text-align: right;
-}
-section > footer img { width: 90px; }
-
-
-
-/* ======== Paragraph in a "small" class div ======== */
-
-.small p {
-  font-size: 14px !important;
-}
-
-
-/* ================= NO LOGO SLIDE ================= */
-section.no-logo footer,
-section.no-logo::after {
-  display: none;
-}
-
-/* ================= BOX ================= */
-
-.box {
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.box-blue {
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 8px;
-  background: var(--elixir-bg-alt);
-  border-left: 4px solid var(--elixir-navy);
-}
-
-.box-orange {
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 8px;
-  background: var(--elixir-bg-alt);
-  border-left: 4px solid var(--elixir-orange);
-}
-
-/* strong text in a orange box is orange */
-.box-orange strong {
-  color: var(--elixir-orange);
-}
-
-/* ================= TABLE ================= */
-
-/* Header row: dark navy background, white bold text */
+/* Header row: dark gray background, white bold text */
 table { font-size: 20px; border-collapse: collapse; width: 100%; }
 thead th {
   background: var(--elixir-gray);
@@ -215,20 +197,86 @@ tbody td {
   border-bottom: 1px solid var(--elixir-bg-alt);
 }
 
-/* ================= 2 COLUMS ================= */
-/* Usage: <div class="columns"> ... </div> */
+/* =====================================================================
+   LAYOUT UTILITIES
+   ===================================================================== */
+
+/* Multi-column layout — each direct child becomes an equal-width column.
+   Usage: <div class="columns"><div>...</div><div>...</div>[<div>...</div>]</div> */
 .columns {
   display: flex;
   flex-direction: row;
-  /*grid-template-columns: 1fr 1fr;*/
   gap: 1rem;
-
-  /* Center align content vertically */
-  align-items: top;
+  align-items: flex-start;
+}
+.columns > * {
+  flex: 1;
 }
 
-/* ================= TITLE SLIDE ================= */
-/* Usage: add the class "title" to the slide's <!-- _class --> directive */
+/* Opt a column out of equal-width stretching, e.g. for a column that just
+   wraps an image and should size to its content instead.
+   Usage: <div class="columns"><div class="img-col">![...](...)</div><div>...</div></div> */
+.img-col {
+  flex: 0 0 auto;
+}
+
+/* Small print, e.g. a source/citation line below a table or figure.
+   Usage: <div class="small">...</div> */
+.small p {
+  font-size: 14px !important;
+}
+
+/* Callout box. Combine the base .box with a color modifier.
+   Usage: <div class="box box-blue">...</div> or <div class="box box-orange">...</div> */
+.box {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+}
+.box-blue { border-left-color: var(--elixir-navy); background: var(--elixir-bg-alt); }
+.box-orange { border-left-color: var(--elixir-orange); background: var(--elixir-light-orange);}
+
+
+/* strong text in an orange box is orange, not navy */
+.box-orange strong {
+  color: var(--elixir-orange);
+}
+
+/* =====================================================================
+   FOOTER & PAGE NUMBER
+   ===================================================================== */
+
+/* Footer logo - bottom right on every content slide, per brand rule.
+   Set with the Marp front-matter directive, e.g.:
+   footer: '![w:90px](assets/theme/elixir-logo-standard.png)'
+   Marp then repeats it on every slide automatically. */
+section > footer {
+  position: absolute !important;
+  bottom: 18px !important;
+  right: 30px !important;
+  left: auto !important;
+  top: auto !important;
+  width: 90px;
+  text-align: right;
+}
+section > footer img { width: 90px; }
+
+/* Content slide without the footer logo or page number, for slides that
+   need the full canvas for a large image.
+   Usage: <!-- _class: no-logo --> */
+section.no-logo footer,
+section.no-logo::after {
+  display: none;
+}
+
+/* =====================================================================
+   TITLE SLIDE
+   Usage: <!-- _class: title -->, with a <div class="speaker"> containing
+   <div class="speaker-name">/<div class="speaker-affiliation">, and a
+   <div class="url">.
+   ===================================================================== */
+
 section.title {
   background-color: var(--elixir-bg);
   color: var(--elixir-gray);
@@ -266,7 +314,6 @@ section.title .speaker-affiliation {
   font-size: 18px;
   color: var(--elixir-gray);
 }
-
 section.title .url {
   position: absolute;
   bottom: 22px;
@@ -277,32 +324,26 @@ section.title .url {
   font-style: italic;
 }
 section.title footer,
-section.divider footer,
-section.closing footer {
-  filter: none;
-}
-
-section.title footer,
 section.title::after {
-  display: none;
+  display: none; /* the title slide has its own logo, baked into the background art above */
 }
 
-/* ================= SECTION / DIVIDER SLIDE ================= */
-/* Usage: add the class "divider" — for signposting a new topic */
+/* =====================================================================
+   DIVIDER / SECTION-BREAK SLIDE
+   Usage: <!-- _class: divider --> — signposts a new topic in a talk.
+   ===================================================================== */
+
 section.divider {
   background: var(--elixir-navy);
   background-image: var(--elixir-divider-art);
   background-repeat: no-repeat;
-  background-position:
-    0px -50px;
-  background-size:
-    auto 100%;
+  background-position: 0px -50px;
+  background-size: auto 100%;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 section.divider h2 {
   background: var(--elixir-bg);
   font-size: 32px;
@@ -317,14 +358,18 @@ section.divider h2 {
   left: 0px;
 }
 section.divider::after {
-  display: none; /* hide page number, same fix as title slide */
+  display: none; /* hide page number, same fix as the title slide */
 }
 section.divider footer {
-  display: none; /* no logog */
+  display: none; /* no logo on a divider slide */
 }
 
-/* ================= CLOSING / THANK YOU SLIDE ================= */
-/* Usage: add the class "closing" */
+/* =====================================================================
+   CLOSING / THANK-YOU SLIDE
+   Usage: <!-- _class: closing -->, with a <div class="url"> and an
+   optional <div class="social"> block (see social-row/icon usage below).
+   ===================================================================== */
+
 section.closing {
   background-image:
     var(--elixir-closing-art),
@@ -342,15 +387,6 @@ section.closing h1 {
   right: 60px;
   bottom: 300px;
 }
-section.closing .social {
-  position: absolute;
-  bottom: 90px;
-  right: 60px;
-  font-size: 14px;
-  color: var(--elixir-gray);
-  text-align: right;
-  font-style: italic;
-}
 section.closing .url {
   position: absolute;
   bottom: 22px;
@@ -361,18 +397,31 @@ section.closing .url {
   font-style: italic;
 }
 section.closing::after {
-  display: none; /* hide page number, same fix as title slide */
+  display: none; /* hide page number, same fix as the title slide */
 }
 section.closing footer {
-  display: none; /* logo is now baked into the background layer above */
+  display: none; /* logo is baked into the background layer above */
 }
 
+/* "Follow us on social media" block.
+   Usage:
+   <div class="social">
+     <div class="social-header">Follow us on social media</div>
+     <div class="social-row">
+       <span class="icon icon-bluesky"></span>
+       <span>@handle</span>
+       <span class="icon icon-linkedin"></span>
+       <span>/company/name</span>
+     </div>
+   </div> */
 section.closing .social {
   position: absolute;
   bottom: 60px;
   right: 60px;
-  text-align: right;
+  font-size: 14px;
   color: var(--elixir-gray);
+  text-align: right;
+  font-style: italic;
 }
 section.closing .social-header {
   font-style: italic;
@@ -387,7 +436,13 @@ section.closing .social-row {
   font-size: 16px;
   margin-bottom: 8px;
 }
-section.closing .social-row img {
+section.closing .social-row .icon {
+  display: inline-block;
   width: 40px;
-  height: auto;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
+section.closing .social-row .icon-bluesky { background-image: var(--bluesky-logo); }
+section.closing .social-row .icon-linkedin { background-image: var(--linkedin-logo); }

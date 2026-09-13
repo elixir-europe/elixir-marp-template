@@ -8,8 +8,9 @@ placement follow that source template.
 
 ```
 elixir.css       the theme (colors, fonts, layouts)
-template.md      starter deck showing every slide type
-assets/          logo and decorative graphics, extracted from the .pptx
+template.md      starter deck showing every slide type/class
+assets/theme/    logo, fonts, and decorative graphics referenced by elixir.css
+assets/          demo/placeholder content referenced by template.md
 ```
 
 ## Requirements

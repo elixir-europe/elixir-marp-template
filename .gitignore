@@ -1,0 +1,8 @@
+# Marp export output (built from template.md; template.pdf is the only
+# export intentionally checked in, as a visual reference)
+deck.html
+deck.pdf
+deck.pptx
+
+# personal session notes
+claude.txt
